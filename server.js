@@ -70,8 +70,9 @@ const resolvers = {
 }
 
 const server = new ApolloServer({ typeDefs, resolvers })
-server.listen({ port: 8080 })
-    .then(({ url }) => console.log(`running at ${url}`))
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+    console.log(`🚀 Server ready at ${url}`);
+  });
 
 sequelize
     .authenticate()

@@ -20,6 +20,7 @@ const Location = sequelize.define('Location', {
 })
 
 
+
 const typeDefs = gql`
 
     type Location {
@@ -36,7 +37,8 @@ const typeDefs = gql`
     }
 
     type Query {
-        locationGroup: LocationGroup
+        locationGroup: LocationGroup!
+
     }
 
     # input LocationInfo {

@@ -55,12 +55,14 @@ const typeDefs = gql`
 
 const resolvers = {
     Query: {
-        locationGroup: async () => {
-
+        locationGroup: () => {}
+    },
+    LocationGroup: {
+        uid:"placeholder ID",
+        type:"placeholder TYPE",
+        locations: async () => {
             const places = await Location.findAll();
-            console.log("All users:", JSON.stringify(places, null, 2));
-
-            return new LocationGroup("placeholder ID", "placeholder TYPE", places)
+            return places
         }
     },
     Mutation: {

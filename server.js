@@ -78,9 +78,9 @@ const server = new ApolloServer({
 
 server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
-  }).then (({url}) => {
+
     sequelize = new Sequelize(`postgres://${url}/hyunki`);
-    
+
     sequelize
     .authenticate()
     .then(function (err) {
@@ -90,15 +90,19 @@ server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
     .catch(function (err) {
         console.log('Unable to connect to the database:', err);
     });
-  });
 
-(async () => {
-    await sequelize.sync({ force: true });
+    (async () => {
+        await sequelize.sync({ force: true });
+    
+        // const place = await Location.create({ latitude: "1", longitiude: "0" });
+        // console.log("longitude:", place.longitude);
+    
+        // const places = await Location.findAll();
+        // console.log("All users:", JSON.stringify(places, null, 2));
+    })();
 
-    // const place = await Location.create({ latitude: "1", longitiude: "0" });
-    // console.log("longitude:", place.longitude);
 
-    // const places = await Location.findAll();
-    // console.log("All users:", JSON.stringify(places, null, 2));
-})();
+  })
+
+
 

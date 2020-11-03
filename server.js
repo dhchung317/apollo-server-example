@@ -1,6 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server')
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('postgres://localhost:5432/hyunki');
+var sequelize
 
 const Location = sequelize.define('Location', {
     localeId: {
@@ -75,11 +75,13 @@ const server = new ApolloServer({
     introspection: true,
     playground: true,
 })
+
 server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
-  });
-
-sequelize
+  }).then (({url}) => {
+    sequelize = new Sequelize(`postgres://${url}/hyunki`);
+    
+    sequelize
     .authenticate()
     .then(function (err) {
         console.log('Connection has been established successfully.');
@@ -88,6 +90,7 @@ sequelize
     .catch(function (err) {
         console.log('Unable to connect to the database:', err);
     });
+  });
 
 (async () => {
     await sequelize.sync({ force: true });

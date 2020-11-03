@@ -22,17 +22,17 @@ const Location = sequelize.define('Location', {
 
 const typeDefs = gql`
 
-    type LocationGroup {
-        uid: String,
-        type: String,
-        locations: [Location]
-    }
-
     type Location {
         localeId: String,
         latitude: Float!,
         longitude: Float!,
         address: String
+    }
+
+    type LocationGroup {
+        uid: String,
+        type: String,
+        locations: [Location]
     }
 
     type Query {

@@ -22,8 +22,10 @@ const Location = sequelize.define('Location', {
 
 const typeDefs = gql`
 
-    type Query {
-        locationGroup: LocationGroup
+    type LocationGroup {
+        uid: String,
+        type: String,
+        locations: [Location]
     }
 
     type Location {
@@ -33,18 +35,16 @@ const typeDefs = gql`
         address: String
     }
 
+    type Query {
+        locationGroup: LocationGroup
+    }
+
     # input LocationInfo {
     #     localeId: String
     #     latitude: Float!
     #     longitude: Float!
     #     address: String
     # }
-
-    type LocationGroup {
-        uid: String,
-        type: String,
-        locations: [Location]
-    }
 
     type Mutation {
         addLocation(latitude: Float!, longitude: Float!):Location!
@@ -55,23 +55,23 @@ const resolvers = {
     Query: {
         locationGroup: async () => {
 
-                const places = await Location.findAll();
-                console.log("All users:", JSON.stringify(places, null, 2));
-                
-                return new LocationGroup("placeholder ID", "placeholder TYPE", places)
+            const places = await Location.findAll();
+            console.log("All users:", JSON.stringify(places, null, 2));
+
+            return new LocationGroup("placeholder ID", "placeholder TYPE", places)
         }
     },
     Mutation: {
         addLocation: async (parent, args) => {
-                const place = await Location.create({ latitude: args.latitude, longitude: args.longitude});
-                // console.log("longitude:", place.longitude);
-                return place
-            }
+            const place = await Location.create({ latitude: args.latitude, longitude: args.longitude });
+            // console.log("longitude:", place.longitude);
+            return place
         }
-    
+    }
+
 }
 
-const server = new ApolloServer({ 
+const server = new ApolloServer({
     typeDefs,
     resolvers,
     introspection: true,
@@ -80,24 +80,24 @@ const server = new ApolloServer({
 
 server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
-  })
+})
 
-  sequelize
-  .authenticate()
-  .then(function (err) {
-      console.log('Connection has been established successfully.');
-      //   User.sync()
-  })
-  .catch(function (err) {
-      console.log('Unable to connect to the database:', err);
-  });
+sequelize
+    .authenticate()
+    .then(function (err) {
+        console.log('Connection has been established successfully.');
+        //   User.sync()
+    })
+    .catch(function (err) {
+        console.log('Unable to connect to the database:', err);
+    });
 
-  (async () => {
-      await sequelize.sync({ force: true });
-  
-      // const place = await Location.create({ latitude: "1", longitiude: "0" });
-      // console.log("longitude:", place.longitude);
-  
-      // const places = await Location.findAll();
-      // console.log("All users:", JSON.stringify(places, null, 2));
-  })();
+(async () => {
+    await sequelize.sync({ force: true });
+
+    // const place = await Location.create({ latitude: "1", longitiude: "0" });
+    // console.log("longitude:", place.longitude);
+
+    // const places = await Location.findAll();
+    // console.log("All users:", JSON.stringify(places, null, 2));
+})();

@@ -2,22 +2,7 @@ const { ApolloServer, gql } = require('apollo-server')
 var Sequelize = require('sequelize');
 var sequelize
 
-const Location = sequelize.define('Location', {
-    localeId: {
-        type: Sequelize.DataTypes.STRING
-    },
-    latitude: {
-        type: Sequelize.DataTypes.FLOAT,
-        allowNull: false
-    },
-    longitude: {
-        type: Sequelize.DataTypes.FLOAT,
-        allowNull: false
-    },
-    localeId: {
-        type: Sequelize.DataTypes.STRING
-    },
-})
+var Location
 
 const typeDefs = gql`
 
@@ -80,6 +65,23 @@ server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
 
     sequelize = new Sequelize(`postgres://${url}/hyunki`);
+
+    Location = sequelize.define('Location', {
+        localeId: {
+            type: Sequelize.DataTypes.STRING
+        },
+        latitude: {
+            type: Sequelize.DataTypes.FLOAT,
+            allowNull: false
+        },
+        longitude: {
+            type: Sequelize.DataTypes.FLOAT,
+            allowNull: false
+        },
+        localeId: {
+            type: Sequelize.DataTypes.STRING
+        },
+    })
 
     sequelize
     .authenticate()

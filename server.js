@@ -57,7 +57,8 @@ const resolvers = {
 
                 const places = await Location.findAll();
                 console.log("All users:", JSON.stringify(places, null, 2));
-                return places
+                
+                return new LocationGroup("placeholder ID", "placeholder TYPE", places)
         }
     },
     Mutation: {

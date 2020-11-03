@@ -23,7 +23,7 @@ const Location = sequelize.define('Location', {
 const typeDefs = gql`
 
     type Query {
-        locationGroup: [Location]
+        locationGroup: LocationGroup
     }
 
     type Location {

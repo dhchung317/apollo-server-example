@@ -19,8 +19,6 @@ const Location = sequelize.define('Location', {
     },
 })
 
-
-
 const typeDefs = gql`
 
     type Location {
@@ -55,7 +53,7 @@ const typeDefs = gql`
 
 const resolvers = {
     Query: {
-        locationGroup: () => {}
+        locationGroup: () => ({})
     },
     LocationGroup: {
         uid:"placeholder ID",

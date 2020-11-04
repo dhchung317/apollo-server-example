@@ -49,9 +49,9 @@ const typeDefs = gql`
         locations: [Location]
     }
 
-    type Locations {
-        locations: [Location]
-    }
+    # type Locations {
+    #     locations: [Location]
+    # }
 
     type Query {
         locationGroup: LocationGroup!
@@ -88,12 +88,12 @@ const resolvers = {
         }
     },
 
-    Locations: {
-        locations: async () => {
-            const places = await Location.findAll();
-            return places
-        }
-    },
+    // Locations: {
+    //     locations: async () => {
+    //         const places = await Location.findAll();
+    //         return places
+    //     }
+    // },
 
     Mutation: {
         addLocation: async (parent, args) => {

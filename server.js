@@ -59,7 +59,7 @@ const typeDefs = gql`
 
     type Subscription {
         locationGroup: LocationGroup
-        locations: [Location]
+        locations: Location
     }
 
     # input LocationInfo {

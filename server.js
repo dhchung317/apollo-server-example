@@ -46,7 +46,7 @@ const typeDefs = gql`
     type LocationGroup {
         uid: String,
         type: String,
-        locations: [Locations]
+        locations: [Location]
     }
 
     type Locations {

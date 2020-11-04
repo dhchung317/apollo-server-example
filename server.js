@@ -46,10 +46,6 @@ const typeDefs = gql`
     type LocationGroup {
         uid: String,
         type: String,
-        locations: Locations
-    }
-
-    type Locations {
         locations: [Location]
     }
 
@@ -58,7 +54,8 @@ const typeDefs = gql`
     }
 
     type Subscription {
-        locations: Locations
+        locationGroup: LocationGroup
+        locations: [Location]
     }
 
     # input LocationInfo {
@@ -80,10 +77,7 @@ const resolvers = {
 
     LocationGroup: {
         uid:() => {"placeholder ID"},
-        type:() => {"placeholder TYPE"}
-    },
-
-    Locations: {
+        type:() => {"placeholder TYPE"},
         locations: async () => {
             const places = await Location.findAll();
             return places
@@ -100,6 +94,9 @@ const resolvers = {
     },
 
     Subscription: {
+        locationGroup: {
+            subscribe: () => pubsub.asyncIterator('locationGroup')
+        },
         locations: {
             subscribe: () => pubsub.asyncIterator('locations')
         }

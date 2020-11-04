@@ -1,4 +1,18 @@
 const { ApolloServer, gql } = require('apollo-server')
+import { PubSub } from 'graphql-subscriptions';
+
+export const pubsub = new PubSub();
+
+// // ... Later in your code, when you want to publish data over subscription, run:
+
+// const payload = {
+//     commentAdded: {
+//         id: '1',
+//         content: 'Hello!',
+//     }
+// };
+
+// pubsub.publish('commentAdded', payload);
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize(process.env.DATABASE_URL)
 
@@ -34,12 +48,16 @@ const typeDefs = gql`
         locations: [Location]
     }
 
+    type Locations {
+        locations: [Location]
+    }
+
     type Query {
         locationGroup: LocationGroup!
     }
 
     type Subscription {
-        locationGroup: LocationGroup!
+        locations: Locations
     }
 
     # input LocationInfo {
@@ -59,7 +77,9 @@ const resolvers = {
         locationGroup: () => ({})
     },
     Subscription: {
-        locationGroup: () => ({})
+        locations: {
+            subscribe: () => pubsub.asyncIterator('locations')
+        }
     },
     LocationGroup: {
         uid:() => {"placeholder ID"},
@@ -68,10 +88,12 @@ const resolvers = {
             const places = await Location.findAll();
             return places
         }
+
     },
     Mutation: {
         addLocation: async (parent, args) => {
             const place = await Location.create({ latitude: args.latitude, longitude: args.longitude });
+            pubsub.publish('locations', place)
             // console.log("longitude:", place.longitude);
             return place
         }

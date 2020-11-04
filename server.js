@@ -1,7 +1,8 @@
 const { ApolloServer, gql } = require('apollo-server')
-import { PubSub } from 'graphql-subscriptions';
 
-export const pubsub = new PubSub();
+const { PubSub } = require('apollo-server');
+
+const pubsub = new PubSub();
 
 // // ... Later in your code, when you want to publish data over subscription, run:
 
@@ -89,7 +90,7 @@ const resolvers = {
             return places
         }
     },
-    
+
     LocationGroup: {
         uid:() => {"placeholder ID"},
         type:() => {"placeholder TYPE"},

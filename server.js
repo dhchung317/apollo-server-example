@@ -46,7 +46,7 @@ const typeDefs = gql`
     type LocationGroup {
         uid: String,
         type: String,
-        locationsObj: Locations
+        locations: [Locations]
     }
 
     type Locations {
@@ -104,6 +104,7 @@ const resolvers = {
             return place
         }
     },
+//TODO: restructure data outline *
 
     Subscription: {
         locationGroup: {

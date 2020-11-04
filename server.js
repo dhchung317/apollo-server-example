@@ -36,7 +36,10 @@ const typeDefs = gql`
 
     type Query {
         locationGroup: LocationGroup!
+    }
 
+    type Subscription {
+        locationGroup: LocationGroup!
     }
 
     # input LocationInfo {
@@ -53,6 +56,9 @@ const typeDefs = gql`
 
 const resolvers = {
     Query: {
+        locationGroup: () => ({})
+    },
+    Subscription: {
         locationGroup: () => ({})
     },
     LocationGroup: {

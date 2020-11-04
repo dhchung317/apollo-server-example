@@ -46,6 +46,10 @@ const typeDefs = gql`
     type LocationGroup {
         uid: String,
         type: String,
+        locationsObj: Locations
+    }
+
+    type Locations {
         locations: [Location]
     }
 
@@ -77,7 +81,10 @@ const resolvers = {
 
     LocationGroup: {
         uid:() => {"placeholder ID"},
-        type:() => {"placeholder TYPE"},
+        type:() => {"placeholder TYPE"}
+    },
+
+    Locations: {
         locations: async () => {
             const places = await Location.findAll();
             return places
@@ -87,7 +94,7 @@ const resolvers = {
     Mutation: {
         addLocation: async (parent, args) => {
             const place = await Location.create({ latitude: args.latitude, longitude: args.longitude });
-            pubsub.publish('locations', place)
+            pubsub.publish('locations', [place])
             // console.log("longitude:", place.longitude);
             return place
         }

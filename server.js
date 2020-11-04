@@ -81,7 +81,11 @@ const resolvers = {
 
     LocationGroup: {
         uid:() => {"placeholder ID"},
-        type:() => {"placeholder TYPE"}
+        type:() => {"placeholder TYPE"},
+        locations: async () => {
+            const places = await Location.findAll();
+            return places
+        }
     },
 
     Locations: {

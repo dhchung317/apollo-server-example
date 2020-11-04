@@ -95,17 +95,22 @@ const resolvers = {
         addLocation: async (parent, args) => {
             const place = await Location.create({ latitude: args.latitude, longitude: args.longitude });
             // console.log("longitude:", place.longitude);
-            pubsub.publish('locations', place)
+            pubsub.publish('locations', {
+                locations: {
+                    latitude: place.latitude,
+                    longitude: place.longitude
+                }
+            })
             return place
         }
     },
 
     Subscription: {
         locationGroup: {
-            locationGroup: () => pubsub.asyncIterator('locationGroup')
+            subscribe: () => pubsub.asyncIterator('locationGroup')
         },
         locations: {
-            locations: () => pubsub.asyncIterator('locations')
+            subscribe: () => pubsub.asyncIterator('locations')
         }
     }
 

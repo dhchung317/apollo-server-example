@@ -94,18 +94,18 @@ const resolvers = {
     Mutation: {
         addLocation: async (parent, args) => {
             const place = await Location.create({ latitude: args.latitude, longitude: args.longitude });
-            pubsub.publish('locations', [place])
             // console.log("longitude:", place.longitude);
+            pubsub.publish('locations', )
             return place
         }
     },
 
     Subscription: {
         locationGroup: {
-            subscribe: () => pubsub.asyncIterator('locationGroup')
+            locationGroup: () => pubsub.asyncIterator('locationGroup')
         },
         locations: {
-            subscribe: () => pubsub.asyncIterator('locations')
+            locations: () => pubsub.asyncIterator('locations')
         }
     }
 

@@ -95,7 +95,7 @@ const resolvers = {
         addLocation: async (parent, args) => {
             const place = await Location.create({ latitude: args.latitude, longitude: args.longitude });
             // console.log("longitude:", place.longitude);
-            pubsub.publish('locations', )
+            pubsub.publish('locations', place)
             return place
         }
     },

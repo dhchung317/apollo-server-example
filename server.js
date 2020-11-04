@@ -76,11 +76,20 @@ const resolvers = {
     Query: {
         locationGroup: () => ({})
     },
+
     Subscription: {
         locations: {
             subscribe: () => pubsub.asyncIterator('locations')
         }
     },
+
+    Locations: {
+        locations: async () => {
+            const places = await Location.findAll();
+            return places
+        }
+    },
+    
     LocationGroup: {
         uid:() => {"placeholder ID"},
         type:() => {"placeholder TYPE"},
